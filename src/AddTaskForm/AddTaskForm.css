@@ -1,0 +1,24 @@
+.task_form {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.new_task {
+    margin-top: 2px;
+    font-size: 17px;
+    width: 70%;
+    padding: 5px;
+    text-shadow: 0 0 10px #FFFFFF;
+    border-radius: 5px;
+}
+
+.add_task {
+    font-size: 17px;
+    padding: 5px;
+    color: rgba(0,0,0,.6);
+    background: #6e6e6e;
+    text-shadow: 3px 2px 3px rgba(255,255,255,.2);
+    border-radius: 5px;
+    width: 20%;
+}
