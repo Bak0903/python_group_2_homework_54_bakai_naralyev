@@ -4,24 +4,21 @@ import './Task.css';
 
 class AddTaskForm extends Component {
     render() {
-
-        if (this.props.status === 'Задача выполняется')
-
         return (
-                    <div className={"task"} key={this.props.id}>
-                        {this.props.text}
+                    <div className={"task"} id={this.props.id}>
+                        <div>{this.props.text}</div>
+                        <div>{this.props.status}</div>
+                        <div>
+                            <input
+                                type="checkbox"
+                                checked={this.props.status}
+                                onChange={this.props.onCheckbox}
+                            />
+                        </div>
                     <button className={"delete_button"} onClick={this.props.onTaskRemove}>delete</button>
                     </div>
 
         );
-        else {
-            return (
-                <div className={"task"} key={this.props.id}>
-                    {this.props.text} {this.props.status}
-                    <button className={"delete_button"} onClick={this.props.onTaskRemove}>delete</button>
-                </div>
-            )
-        }
     }
 }
 
