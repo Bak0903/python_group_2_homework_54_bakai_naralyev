@@ -8,18 +8,20 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        currentTask: {id:"", text: '', status: 'Задача выполняется'},
+        currentTask: {id:"", text: '', status: false},
     tasks: [
-        {id: 1, text: 'Buy milk', status: 'Задача выполняется'},
-        {id: 2, text: 'Walk with dog', status: 'Задача выполняется'},
-        {id: 3, text: 'Do homework', status: 'Задача выполняется'},
-        {id: 4, text: 'Go home', status: 'Задача выполнена'},
+        {id: 1, text: 'Buy milk', status: false},
+        {id: 2, text: 'Walk with dog', status: false},
+        {id: 3, text: 'Do homework', status: false},
+        {id: 4, text: 'Go home', status: false},
     ],
   };
 
     this.handleChange = this.handleChange.bind(this);
-
     this.newTask = this.newTask.bind(this);
+    this.removeTask = this.removeTask.bind(this);
+    this.isAddButtonDisabled = this.isAddButtonDisabled.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
 
   }
 
@@ -44,11 +46,14 @@ class App extends Component {
     let task = {...this.state.currentTask};
     const now = new Date();
     task.id = now.getTime();
-    let tasks = [...this.state.tasks, task];
+    console.log(task);
+    let tasks = [...this.state.tasks];
+    tasks.push(task);
+    console.log(tasks);
     this.setState({
         ...this.state,
         tasks,
-        currentTask: {id:"", text: '', status: 'Задача выполняется'},
+        currentTask: {id:"", text: '', status: false},
     });
   }
 
@@ -57,42 +62,54 @@ class App extends Component {
     };
 
   removeTask(id) {
-    let taskId = this.state.tasks.findIndex(task => {
-        return task.id === id;
-    });
 
     const tasks = [...this.state.tasks];
-    tasks.splice(taskId, 1);
-
+    tasks.splice(id, 1);
     this.setState({
         ...this.state,
         tasks
     });
   };
 
+  handleInputChange(event, id) {
+        const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+
+        let task = this.state.tasks[id];
+        task.status = value;
+        let tasks = [...this.state.tasks];
+        tasks[id] = task;
+        this.setState({
+            ...this.state,
+            tasks
+        });
+  }
+
   render() {
     return (
       <div className="App">
-        <AddTaskForm
-            task={this.state.currentTask}
-            onAddTask={this.newTask}
-            onChangeHandle={this.handleChange}
-            isAddButtonDisabled={this.isAddButtonDisabled()}
-        />
-            <div className="List_of_tasks">
-                {Object.values(this.state.tasks).map((task, i) => {
-                    return (
-                        <Task
-                            text={task.text}
-                            id={task.id}
-                            status={task.status}
-                            onTaskRemove={() => this.removeTask(task.id)}
-                        />
-                    );
-                }
-                )
-                }
-            </div>
+          <div>
+            <AddTaskForm
+                task={this.state.currentTask}
+                onAddTask={this.newTask}
+                onChangeHandle={this.handleChange}
+                isAddButtonDisabled={this.isAddButtonDisabled()}
+            />
+          </div>
+        <div className="List_of_tasks">
+            {Object.values(this.state.tasks).map((task, i) => {
+                return (
+                    <Task
+                        text={task.text}
+                        id={task.id}
+                        status={task.status}
+                        onTaskRemove={() => this.removeTask(i)}
+                        onCheckbox = {(event) => this.handleInputChange(event, i)}
+                    />
+                );
+            }
+            )
+            }
+        </div>
       </div>
     );
   }
