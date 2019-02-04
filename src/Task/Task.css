@@ -6,4 +6,15 @@
     text-shadow: 0 0 10px #FFFFFF;
     border: #caafaf solid 1px;
     border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.checkbox {
+    float: right;
+}
+
+.delete_button {
+    float: right;
+    margin-left: 20px;
 }

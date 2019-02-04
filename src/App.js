@@ -13,7 +13,7 @@ class App extends Component {
         {id: 1, text: 'Buy milk', status: false},
         {id: 2, text: 'Walk with dog', status: false},
         {id: 3, text: 'Do homework', status: false},
-        {id: 4, text: 'Go home', status: false},
+        {id: 4, text: 'Go home', status: true},
     ],
   };
 
@@ -26,7 +26,6 @@ class App extends Component {
   }
 
   handleChange(event) {
-    console.log(this.state);
     let value = event.target.value;
 
     let currentTask = {
@@ -37,7 +36,6 @@ class App extends Component {
         ...this.state,
         currentTask
     });
-    console.log(this.state);
   }
 
 
@@ -46,10 +44,7 @@ class App extends Component {
     let task = {...this.state.currentTask};
     const now = new Date();
     task.id = now.getTime();
-    console.log(task);
-    let tasks = [...this.state.tasks];
-    tasks.push(task);
-    console.log(tasks);
+    let tasks = [...this.state.tasks, task];
     this.setState({
         ...this.state,
         tasks,
@@ -96,7 +91,8 @@ class App extends Component {
             />
           </div>
         <div className="List_of_tasks">
-            {Object.values(this.state.tasks).map((task, i) => {
+            {Object.values(this.state.tasks).map(
+                (task, i) => {
                 return (
                     <Task
                         text={task.text}
@@ -106,7 +102,7 @@ class App extends Component {
                         onCheckbox = {(event) => this.handleInputChange(event, i)}
                     />
                 );
-            }
+                }
             )
             }
         </div>
