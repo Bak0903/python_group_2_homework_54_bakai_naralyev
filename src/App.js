@@ -68,7 +68,6 @@ class App extends Component {
 
   handleInputChange(event, id) {
         const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
-
         let task = this.state.tasks[id];
         task.status = value;
         let tasks = [...this.state.tasks];
